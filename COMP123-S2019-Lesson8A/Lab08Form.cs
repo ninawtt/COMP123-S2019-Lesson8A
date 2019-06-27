@@ -14,13 +14,27 @@ namespace COMP123_S2019_Lesson8A
     {
         public string UserName { get; set; }
         public float UserAge { get; set; }
+
+        /// <summary>
+        /// This is the default Constructor
+        /// </summary>
         public Lab08Form()
         {
             InitializeComponent();
         }
 
         /// <summary>
-        /// This is the Event Handler for the SubmitButton Click event
+        /// This is the Event Handler for the Lab08Form Load Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Lab08Form_Load(object sender, EventArgs e)
+        {
+            ClearForm();
+        }
+
+        /// <summary>
+        /// This is the Event Handler for the SubmitButton Click Event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -28,32 +42,36 @@ namespace COMP123_S2019_Lesson8A
         {
             UserName = NameTextBox.Text;
 
-            // option A
-            UserAge = Convert.ToSingle(AgeTextBox.Text);
+            // option A for converting a string into a float <Tom recommends>
+            UserAge = float.Parse(AgeTextBox.Text);
 
-            OutputLabel.Text = NameTextBox.Text + " " + AgeTextBox.Text;
-            ClearForm();
+            //// option B for converting a string into a float <Tom recommends>
+            //UserAge = Convert.ToSingle(AgeTextBox.Text);      //single is a float
 
-            //// option B
-            //UserAge = float.Parse(AgeTextBox.Text);
-
-            //// option C
+            //// option C for converting a string into a float
             //float tempFloat;
             //bool result = float.TryParse(AgeTextBox.Text, out tempFloat);
             //UserAge = tempFloat;
 
-            //// option D
-            //UserAge = (float)AgeTextBox.Text;   //doesn't work
+            //// option D for converting a string into a float
+            //UserAge = (float)AgeTextBox.Text;   //this option  doesn't work
+
+            OutputLabel.Text = NameTextBox.Text + " " + AgeTextBox.Text;
+            ClearForm();
         }
 
+        /// <summary>
+        /// This method clears the TextBoxes on the form and reset other properties
+        /// </summary>
         private void ClearForm()
         {
             NameTextBox.Clear();
             AgeTextBox.Clear();
+            SubmitButton.Enabled = false;
         }
 
         /// <summary>
-        /// This is the Event handler for the agetextbox textchanged event
+        /// This is the Event Handler for the AgeTextBox TextChanged Event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -62,7 +80,7 @@ namespace COMP123_S2019_Lesson8A
         {
             try
             {
-                float.Parse(AgeTextBox.Text);
+                float.Parse(AgeTextBox.Text);  //if this is true, it will run the next code
                 SubmitButton.Enabled = true;
             }
             catch
@@ -72,7 +90,7 @@ namespace COMP123_S2019_Lesson8A
         }
 
         /// <summary>
-        /// This is the event handler for the nametextbox textchanged event
+        /// This is the Event Handler for the NameTextBox TextChanged Event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -80,5 +98,6 @@ namespace COMP123_S2019_Lesson8A
         {
             SubmitButton.Enabled = (NameTextBox.Text.Length >= 2) ? true : false;
         }
+
     }
 }
